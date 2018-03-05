@@ -1,0 +1,1073 @@
+<html>
+<body>
+<head>Select Your Brush</head>
+<button  onclick="star()">star</button>
+<button  onclick="pen()">pen</button>
+<button  onclick="pencil()">pencil</button>
+<button  onclick="thickpencil()">thickpencil</button>
+<button  onclick="edgepencilwithshadow()">edgepencilwithshadow</button>
+<button  onclick="gradientsketch()">gradientsketch</button>
+<button  onclick="fur()">fur</button>
+<button  onclick="lightpen()">lightpen</button>
+<button  onclick="thickbrush()">thickbrush</button>
+<button  onclick="sliced()">sliced</button><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button  onclick="multiplelines()">multiplelines</button>
+<button  onclick="opacity()">opacity</button>
+<button  onclick="stamplike()">stamplike</button>
+<button  onclick="traileffect()">traileffect</button>
+<button  onclick="pattern()">pattern</button>
+<button  onclick="linepattern()">linepattern</button>
+<button  onclick="doublelinepattern()">doublelinepattern</button>
+<button  onclick="rainbow()">rainbow</button>
+<button  onclick="image()">image</button>
+<button  onclick="spray()">spray</button><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" id="clear" value="Clear">
+<canvas id="c" width="1500" height="1500"></canvas>
+<style>
+canvas { border: 1px solid #ccc }
+</style>
+<script type="text/javascript">
+	var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+	         document.getElementById('clear').addEventListener('click', function() {
+        ctx.clearRect(0, 0, c.width, c.height);
+      }, false);
+
+    </script>
+  
+</script>
+<script type="text/javascript">
+	function star(){
+	function drawStar(x, y) {
+  var length = 15;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.beginPath();
+  ctx.rotate((Math.PI * 1 / 10));
+  for (var i = 5; i--;) {
+    ctx.lineTo(0, length);
+    ctx.translate(0, length);
+    ctx.rotate((Math.PI * 2 / 10));
+    ctx.lineTo(0, -length);
+    ctx.translate(0, -length);
+    ctx.rotate(-(Math.PI * 6 / 10));
+  }
+  ctx.lineTo(0, length);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.restore();
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineJoin = ctx.lineCap = 'round';
+ctx.fillStyle = 'red';
+
+var isDrawing, points = [ ], radius = 15;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+  
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  for (var i = 0; i < points.length; i++) {
+    drawStar(points[i].x, points[i].y);
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function pen(){
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 1;
+ctx.lineJoin = ctx.lineCap = 'round';
+ctx.strokeStyle = 'purple';
+
+var isDrawing, lastPoint;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+
+  ctx.beginPath();
+  
+  ctx.moveTo(lastPoint.x - getRandomInt(0, 2), lastPoint.y - getRandomInt(0, 2));
+  ctx.lineTo(e.clientX - getRandomInt(0, 2), e.clientY - getRandomInt(0, 2));
+  ctx.stroke();
+  
+  ctx.moveTo(lastPoint.x, lastPoint.y);
+  ctx.lineTo(e.clientX, e.clientY);
+  ctx.stroke();
+  
+  ctx.moveTo(lastPoint.x + getRandomInt(0, 2), lastPoint.y + getRandomInt(0, 2));
+  ctx.lineTo(e.clientX + getRandomInt(0, 2), e.clientY + getRandomInt(0, 2));
+  ctx.stroke();
+    
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+ function pencil(){
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+var isDrawing;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  ctx.moveTo(e.clientX, e.clientY);
+};
+el.onmousemove = function(e) {
+  if (isDrawing) {
+    ctx.lineTo(e.clientX, e.clientY);
+    ctx.stroke();
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+function thickpencil(){
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+var isDrawing;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  ctx.lineWidth = 10;
+  ctx.lineJoin = ctx.lineCap = 'round';
+  ctx.moveTo(e.clientX, e.clientY);
+};
+el.onmousemove = function(e) {
+  if (isDrawing) {
+    ctx.lineTo(e.clientX, e.clientY);
+    ctx.stroke();
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+function edgepencilwithshadow(){
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+var isDrawing;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  ctx.lineWidth = 10;
+  ctx.lineJoin = ctx.lineCap = 'round';
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = 'rgb(0, 0, 0)';
+  ctx.moveTo(e.clientX, e.clientY);
+};
+el.onmousemove = function(e) {
+  if (isDrawing) {
+    ctx.lineTo(e.clientX, e.clientY);
+    ctx.stroke();
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+function gradientsketch(){
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+var isDrawing;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  ctx.moveTo(e.clientX, e.clientY);
+};
+el.onmousemove = function(e) {
+  if (isDrawing) {
+    var radgrad = ctx.createRadialGradient(
+      e.clientX,e.clientY,10,e.clientX,e.clientY,20);
+    
+    radgrad.addColorStop(0, '#000');
+    radgrad.addColorStop(0.5, 'rgba(0,0,0,0.5)');
+    radgrad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = radgrad;
+    
+    ctx.fillRect(e.clientX-20, e.clientY-20, 40, 40);
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+function fur(){
+var img = new Image();
+img.src = 'http://www.tricedesigns.com/wp-content/uploads/2012/01/brush2.png';
+img.width = 10;
+
+function distanceBetween(point1, point2) {
+  return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+}
+function angleBetween(point1, point2) {
+  return Math.atan2( point2.x - point1.x, point2.y - point1.y );
+}
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+ctx.lineJoin = ctx.lineCap = 'round';
+
+var isDrawing, lastPoint;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  var currentPoint = { x: e.clientX, y: e.clientY };
+  var dist = distanceBetween(lastPoint, currentPoint);
+  var angle = angleBetween(lastPoint, currentPoint);
+  
+  for (var i = 0; i < dist; i++) {
+    x = lastPoint.x + (Math.sin(angle) * i);
+    y = lastPoint.y + (Math.cos(angle) * i);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(0.5, 0.5);
+    ctx.rotate(Math.PI * 180 / getRandomInt(0, 180));
+    ctx.drawImage(img, 0, 0);
+    ctx.restore();
+  }
+  
+  lastPoint = currentPoint;
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+function lightpen(){
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineJoin = ctx.lineCap = 'round';
+/*ctx.shadowBlur = 10;
+ctx.shadowColor = 'rgb(0, 0, 0)';*/
+
+var isDrawing, points = [ ];
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ 
+    x: e.clientX, 
+    y: e.clientY,
+    width: getRandomInt(3, 5)
+  });
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+  points.push({ 
+    x: e.clientX, 
+    y: e.clientY,
+    width: getRandomInt(3, 5)
+  });
+
+  for (var i = 1; i < points.length; i++) {
+    ctx.beginPath();
+    ctx.moveTo(points[i-1].x, points[i-1].y);
+    ctx.lineWidth = points[i].width;
+    ctx.lineTo(points[i].x, points[i].y);
+    ctx.stroke();
+  }
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function thickbrush(){
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 10;
+ctx.lineJoin = ctx.lineCap = 'butt';
+
+var isDrawing, lastPoint;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+
+  ctx.beginPath();
+  ctx.moveTo(lastPoint.x, lastPoint.y);
+  ctx.lineTo(e.clientX, e.clientY);
+  ctx.stroke();
+  
+  ctx.moveTo(lastPoint.x - 5, lastPoint.y - 5);
+  ctx.lineTo(e.clientX - 5, e.clientY - 5);
+  ctx.stroke();
+  
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+function sliced(){
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 3;
+ctx.lineJoin = ctx.lineCap = 'round';
+
+var isDrawing, lastPoint;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+
+  ctx.beginPath();
+  
+  ctx.globalAlpha = 1;
+  ctx.moveTo(lastPoint.x, lastPoint.y);
+  ctx.lineTo(e.clientX, e.clientY);
+  ctx.stroke();
+  
+  ctx.moveTo(lastPoint.x - 4, lastPoint.y - 4);
+  ctx.lineTo(e.clientX - 4, e.clientY - 4);
+  ctx.stroke();
+  
+  ctx.moveTo(lastPoint.x - 2, lastPoint.y - 2);
+  ctx.lineTo(e.clientX - 2, e.clientY - 2);
+  ctx.stroke();
+  
+  ctx.moveTo(lastPoint.x + 2, lastPoint.y + 2);
+  ctx.lineTo(e.clientX + 2, e.clientY + 2);
+  ctx.stroke();
+  
+  ctx.moveTo(lastPoint.x + 4, lastPoint.y + 4);
+  ctx.lineTo(e.clientX + 4, e.clientY + 4);
+  ctx.stroke();
+    
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+function multiplelines(){
+	function midPointBtw(p1, p2) {
+  return {
+    x: p1.x + (p2.x - p1.x) / 2,
+    y: p1.y + (p2.y - p1.y) / 2
+  };
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 1;
+ctx.lineJoin = ctx.lineCap = 'round';
+
+var isDrawing, points = [ ];
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+   
+  stroke(offsetPoints(-4));
+  stroke(offsetPoints(-2));
+  stroke(points);
+  stroke(offsetPoints(2));
+  stroke(offsetPoints(4));
+};
+
+function offsetPoints(val) {
+  var offsetPoints = [ ];
+  for (var i = 0; i < points.length; i++) {
+    offsetPoints.push({ 
+      x: points[i].x + val,
+      y: points[i].y + val
+    });
+  }
+  return offsetPoints;
+}
+
+function stroke(points) {
+  var p1 = points[0];
+  var p2 = points[1];
+  
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+
+  for (var i = 1, len = points.length; i < len; i++) {
+    // we pick the point between pi+1 & pi+2 as the
+    // end point and p1 as our control point
+    var midPoint = midPointBtw(p1, p2);
+    ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+    p1 = points[i];
+    p2 = points[i+1];
+  }
+  // Draw last line as a straight line while
+  // we wait for the next point to be able to calculate
+  // the bezier control point
+  ctx.lineTo(p1.x, p1.y);
+  ctx.stroke();
+}
+
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function opacity(){
+	function midPointBtw(p1, p2) {
+  return {
+    x: p1.x + (p2.x - p1.x) / 2,
+    y: p1.y + (p2.y - p1.y) / 2
+  };
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 1;
+ctx.lineJoin = ctx.lineCap = 'round';
+
+var isDrawing, points = [ ];
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+  ctx.strokeStyle = 'rgba(0,0,0,1)';
+  stroke(offsetPoints(-4));
+  ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+  stroke(offsetPoints(-2));
+  ctx.strokeStyle = 'rgba(0,0,0,0.6)';
+  stroke(points);
+  ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+  stroke(offsetPoints(2));
+  ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+  stroke(offsetPoints(4));
+};
+
+function offsetPoints(val) {
+  var offsetPoints = [ ];
+  for (var i = 0; i < points.length; i++) {
+    offsetPoints.push({ 
+      x: points[i].x + val,
+      y: points[i].y + val
+    });
+  }
+  return offsetPoints;
+}
+
+function stroke(points) {
+  var p1 = points[0];
+  var p2 = points[1];
+  
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+
+  for (var i = 1, len = points.length; i < len; i++) {
+    // we pick the point between pi+1 & pi+2 as the
+    // end point and p1 as our control point
+    var midPoint = midPointBtw(p1, p2);
+    ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+    p1 = points[i];
+    p2 = points[i+1];
+  }
+  // Draw last line as a straight line while
+  // we wait for the next point to be able to calculate
+  // the bezier control point
+  ctx.lineTo(p1.x, p1.y);
+  ctx.stroke();
+}
+
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function stamplike(){
+	function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineJoin = ctx.lineCap = 'round';
+ctx.fillStyle = 'red';
+
+var isDrawing, points = [ ], radius = 15;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+  
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  for (var i = 0; i < points.length; i++) {
+    ctx.beginPath();
+    ctx.arc(points[i].x, points[i].y, radius, false, Math.PI * 2, false);
+    ctx.fill();
+    ctx.stroke();
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function traileffect(){
+	function distanceBetween(point1, point2) {
+  return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+}
+function angleBetween(point1, point2) {
+  return Math.atan2( point2.x - point1.x, point2.y - point1.y );
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+ctx.fillStyle = 'red';
+ctx.strokeStyle = '#333';
+
+var isDrawing, lastPoint;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  var currentPoint = { x: e.clientX, y: e.clientY };
+  var dist = distanceBetween(lastPoint, currentPoint);
+  var angle = angleBetween(lastPoint, currentPoint);
+  
+  for (var i = 0; i < dist; i+=5) {
+    x = lastPoint.x + (Math.sin(angle) * i) - 25;
+    y = lastPoint.y + (Math.cos(angle) * i) - 25;
+    ctx.beginPath();
+    ctx.arc(x+10, y+10, 20, false, Math.PI * 2, false);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+  
+  lastPoint = currentPoint;
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+function pixels(){
+	function drawPixels(x, y) {
+  for (var i = -10; i < 10; i+= 4) {
+    for (var j = -10; j < 10; j+= 4) {
+      if (Math.random() > 0.5) {
+        ctx.fillStyle = ['red', 'orange', 'yellow', 'green', 
+                         'light-blue', 'blue', 'purple'][getRandomInt(0,6)];
+        ctx.fillRect(x+i, y+j, 4, 4);
+      }
+    }
+  }
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineJoin = ctx.lineCap = 'round';
+var isDrawing, lastPoint;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  drawPixels(e.clientX, e.clientY);
+  
+  lastPoint = { x: e.clientX, y: e.clientY };
+};
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+function pattern(){
+	function midPointBtw(p1, p2) {
+  return {
+    x: p1.x + (p2.x - p1.x) / 2,
+    y: p1.y + (p2.y - p1.y) / 2
+  };
+}
+function getPattern() {
+  var patternCanvas = document.createElement('canvas'),
+      dotWidth = 20,
+      dotDistance = 5,
+      patternCtx = patternCanvas.getContext('2d');
+
+  patternCanvas.width = patternCanvas.height = dotWidth + dotDistance;
+
+  patternCtx.fillStyle = 'red';
+  patternCtx.beginPath();
+  patternCtx.arc(dotWidth / 2, dotWidth / 2, dotWidth / 2, 0, Math.PI * 2, false);
+  patternCtx.closePath();
+  patternCtx.fill();
+  return ctx.createPattern(patternCanvas, 'repeat');
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 25;
+ctx.lineJoin = ctx.lineCap = 'round';
+ctx.strokeStyle = getPattern();
+
+var isDrawing, points = [ ];
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+  var p1 = points[0];
+  var p2 = points[1];
+  
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+
+  for (var i = 1, len = points.length; i < len; i++) {
+    var midPoint = midPointBtw(p1, p2);
+    ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+    p1 = points[i];
+    p2 = points[i+1];
+  }
+  ctx.lineTo(p1.x, p1.y);
+  ctx.stroke();
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function linepattern(){
+	function midPointBtw(p1, p2) {
+  return {
+    x: p1.x + (p2.x - p1.x) / 2,
+    y: p1.y + (p2.y - p1.y) / 2
+  };
+}
+function getPattern() {
+  var patternCanvas = document.createElement('canvas'),
+      dotWidth = 20,
+      dotDistance = 5,
+      ctx = patternCanvas.getContext('2d');
+
+  patternCanvas.width = patternCanvas.height = 10;
+  ctx.strokeStyle = 'green';
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(0, 5);
+  ctx.lineTo(10, 5);
+  ctx.closePath();
+  ctx.stroke();
+  return ctx.createPattern(patternCanvas, 'repeat');
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 25;
+ctx.lineJoin = ctx.lineCap = 'round';
+ctx.strokeStyle = getPattern();
+
+var isDrawing, points = [ ];
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+  var p1 = points[0];
+  var p2 = points[1];
+  
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+
+  for (var i = 1, len = points.length; i < len; i++) {
+    var midPoint = midPointBtw(p1, p2);
+    ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+    p1 = points[i];
+    p2 = points[i+1];
+  }
+  ctx.lineTo(p1.x, p1.y);
+  ctx.stroke();
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function doublelinepattern(){
+	function midPointBtw(p1, p2) {
+  return {
+    x: p1.x + (p2.x - p1.x) / 2,
+    y: p1.y + (p2.y - p1.y) / 2
+  };
+}
+function getPattern() {
+  var patternCanvas = document.createElement('canvas'),
+      dotWidth = 20,
+      dotDistance = 5,
+      ctx = patternCanvas.getContext('2d');
+
+  patternCanvas.width = 10; patternCanvas.height = 20;
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0, 5, 20);
+  ctx.fillStyle = 'gold';
+  ctx.fillRect(5, 0, 10, 20);
+  return ctx.createPattern(patternCanvas, 'repeat');
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 25;
+ctx.lineJoin = ctx.lineCap = 'round';
+ctx.strokeStyle = getPattern();
+
+var isDrawing, points = [ ];
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+  var p1 = points[0];
+  var p2 = points[1];
+  
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+
+  for (var i = 1, len = points.length; i < len; i++) {
+    var midPoint = midPointBtw(p1, p2);
+    ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+    p1 = points[i];
+    p2 = points[i+1];
+  }
+  ctx.lineTo(p1.x, p1.y);
+  ctx.stroke();
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function rainbow(){
+function midPointBtw(p1, p2) {
+  return {
+    x: p1.x + (p2.x - p1.x) / 2,
+    y: p1.y + (p2.y - p1.y) / 2
+  };
+}
+function getPattern() {
+  var patternCanvas = document.createElement('canvas'),
+      dotWidth = 20,
+      dotDistance = 5,
+      ctx = patternCanvas.getContext('2d');
+
+  patternCanvas.width = 35; patternCanvas.height = 20;
+  ctx.fillStyle = 'red';
+  ctx.fillRect(0, 0, 5, 20);
+  ctx.fillStyle = 'orange';
+  ctx.fillRect(5, 0, 10, 20);
+  ctx.fillStyle = 'yellow';
+  ctx.fillRect(10, 0, 15, 20);
+  ctx.fillStyle = 'green';
+  ctx.fillRect(15, 0, 20, 20);
+  ctx.fillStyle = 'lightblue';
+  ctx.fillRect(20, 0, 25, 20);
+  ctx.fillStyle = 'blue';
+  ctx.fillRect(25, 0, 30, 20);
+  ctx.fillStyle = 'purple';
+  ctx.fillRect(30, 0, 35, 20);
+  return ctx.createPattern(patternCanvas, 'repeat');
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 25;
+ctx.lineJoin = ctx.lineCap = 'round';
+ctx.strokeStyle = getPattern();
+
+var isDrawing, points = [ ];
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+  var p1 = points[0];
+  var p2 = points[1];
+  
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+
+  for (var i = 1, len = points.length; i < len; i++) {
+    var midPoint = midPointBtw(p1, p2);
+    ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+    p1 = points[i];
+    p2 = points[i+1];
+  }
+  ctx.lineTo(p1.x, p1.y);
+  ctx.stroke();
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function image(){
+	function midPointBtw(p1, p2) {
+  return {
+    x: p1.x + (p2.x - p1.x) / 2,
+    y: p1.y + (p2.y - p1.y) / 2
+  };
+}
+
+function getPattern() {
+  return ctx.createPattern(img, 'repeat');
+}
+
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineWidth = 25;
+ctx.lineJoin = ctx.lineCap = 'round';
+
+var img = new Image;
+img.onload = function() {
+  ctx.strokeStyle = getPattern();
+};
+img.src = 'https://i.imgur.com/huy6X9t.png';
+
+var isDrawing, points = [ ];
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+  var p1 = points[0];
+  var p2 = points[1];
+  
+  ctx.beginPath();
+  ctx.moveTo(p1.x, p1.y);
+
+  for (var i = 1, len = points.length; i < len; i++) {
+    var midPoint = midPointBtw(p1, p2);
+    ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+    p1 = points[i];
+    p2 = points[i+1];
+  }
+  ctx.lineTo(p1.x, p1.y);
+  ctx.stroke();
+};
+
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+};
+function spray(){
+	var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+var isDrawing;
+var density = 50;
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  ctx.lineWidth = 10;
+  ctx.lineJoin = ctx.lineCap = 'round';
+  ctx.moveTo(e.clientX, e.clientY);
+};
+el.onmousemove = function(e) {
+  if (isDrawing) {
+    for (var i = density; i--; ) {
+      var radius = 20;
+      var offsetX = getRandomInt(-radius, radius);
+      var offsetY = getRandomInt(-radius, radius);
+      ctx.fillRect(e.clientX + offsetX, e.clientY + offsetY, 1, 1);
+    }
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+};
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
